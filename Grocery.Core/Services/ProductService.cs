@@ -20,7 +20,18 @@ namespace Grocery.Core.Services
 
         public Product Add(Product item)
         {
-            throw new NotImplementedException();
+            // Eenvoudige validatie (optioneel, maar verstandig)
+            if (string.IsNullOrWhiteSpace(item.Name))
+                throw new ArgumentException("Productnaam mag niet leeg zijn.");
+
+            if (item.Stock < 0)
+                throw new ArgumentException("Voorraad mag niet negatief zijn.");
+
+            if (item.Price < 0)
+                throw new ArgumentException("Prijs mag niet negatief zijn.");
+
+            // Product toevoegen aan database via repository
+            return _productRepository.Add(item);
         }
 
         public Product? Delete(Product item)
